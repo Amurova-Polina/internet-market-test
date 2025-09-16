@@ -2,17 +2,21 @@ package base;
 
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.Selenide;
-import ibs.amurova.helpers.AllureScreenshotExtension;
+import ibs.amurova.helpers.AllureScreenshotWatcher;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.openqa.selenium.chrome.ChromeOptions;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class BaseTest {
+
+    @RegisterExtension
+    static AllureScreenshotWatcher watcher = new AllureScreenshotWatcher();
 
     @BeforeAll
     public static void setupDriver() {
@@ -31,8 +35,6 @@ public class BaseTest {
 
         Configuration.browserCapabilities = options;
         Configuration.browser = "chrome";
-
-        AllureScreenshotExtension.setupAllureSelenide();
     }
 
     @BeforeEach

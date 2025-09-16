@@ -105,9 +105,12 @@ public class SearchResultsPage extends BasePage {
                 .map(Double::valueOf)
                 .toList();
 
-        List<Double> sortedPriceValues = priceValues
-                .stream()
-                .sorted(Comparator.naturalOrder())
+        List<Double> sortedPriceValues = priceValues.stream()
+                .sorted(
+                        condition == FilterCondition.ASCENDING
+                                ? Comparator.naturalOrder()
+                                : Comparator.reverseOrder()
+                )
                 .toList();
 
         assertEquals(priceValues, sortedPriceValues, "Список не отсортирован в порядке: " + condition + " для типа цены: " + priceType);
