@@ -4,7 +4,6 @@ import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.Selenide;
 import ibs.amurova.helpers.AllureScreenshotWatcher;
 import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -41,11 +40,6 @@ public class BaseTest {
     @BeforeEach
     public void openBrowser() {
         Selenide.open("https://ufa.saturn.net/");
-    }
-
-    @AfterEach
-    public void closeBrowserWindow() {
-        Selenide.closeWindow();
     }
 
     @AfterAll
