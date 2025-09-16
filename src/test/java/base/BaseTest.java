@@ -32,6 +32,7 @@ public class BaseTest {
         Configuration.timeout = 10000;
         Configuration.pageLoadTimeout = 10000;
 
+        Configuration.headless = false;
         Configuration.browserSize = "1920x1080";
 
 //        Configuration.browserCapabilities = options;
