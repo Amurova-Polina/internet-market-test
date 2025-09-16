@@ -29,6 +29,9 @@ public class BaseTest {
         prefs.put("profile.password_manager_enabled", false);
         options.setExperimentalOption("prefs", prefs);
 
+        Configuration.timeout = 10000;
+        Configuration.pageLoadTimeout = 10000;
+
         Configuration.browserSize = "1920x1080";
 
         Configuration.browserCapabilities = options;
