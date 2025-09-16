@@ -26,6 +26,8 @@ public class BaseTest {
         prefs.put("profile.password_manager_enabled", false);
         options.setExperimentalOption("prefs", prefs);
 
+        Configuration.browserSize = "1920x1080";
+
         Configuration.browserCapabilities = options;
         Configuration.browser = "chrome";
     }
