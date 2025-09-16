@@ -101,6 +101,7 @@ public class SearchResultsPage extends BasePage {
                 .filter(card -> card.$x(priceType.getXpath()).is(visible))
                 .map(card -> card.$x(priceType.getXpath()).getText())
                 .filter(price -> !price.isEmpty())
+                .map(value -> value.replace(",", "."))
                 .map(Double::valueOf)
                 .toList();
 
