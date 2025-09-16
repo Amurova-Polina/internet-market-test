@@ -2,6 +2,7 @@ package base;
 
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.Selenide;
+import ibs.amurova.helpers.AllureScreenshotExtension;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
@@ -30,6 +31,8 @@ public class BaseTest {
 
         Configuration.browserCapabilities = options;
         Configuration.browser = "chrome";
+
+        AllureScreenshotExtension.setupAllureSelenide();
     }
 
     @BeforeEach
