@@ -2,9 +2,7 @@ package test_cases;
 
 import base.BaseTest;
 import ibs.amurova.data_provider.ProductTestData;
-import ibs.amurova.helpers.AllureScreenshotWatcher;
 import ibs.amurova.pages.MainPage;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
