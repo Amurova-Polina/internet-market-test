@@ -9,6 +9,7 @@ import java.time.Duration;
 import java.util.List;
 
 import static com.codeborne.selenide.CollectionCondition.size;
+import static com.codeborne.selenide.Condition.matchText;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$$x;
 import static com.codeborne.selenide.Selenide.$x;
@@ -94,6 +95,7 @@ public class CartPage extends BasePage {
     public CartPage checkSummLegalEntity() {
         int summNaturalPerson = Integer.parseInt(finalSumm.text().replace(" ", ""));
         legalEntityIcon.shouldBe(visible).click();
+        finalSumm.should(matchText("\\d+"));
 
         int summLegalEntity = Integer.parseInt(finalSumm.text().replace(" ", ""));
         assertTrue(summLegalEntity < summNaturalPerson,
