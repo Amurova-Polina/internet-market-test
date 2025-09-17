@@ -17,6 +17,12 @@ pipeline {
             choices: ['chrome', 'firefox'],
             description: 'Браузер для запуска тестов'
         )
+
+        string(
+             name: 'TAG',
+             defaultValue: '',
+             description: 'Тег тестов, которые нужно запустить (оставьте пустым для всех)'
+        )
     }
 
     stages {
@@ -34,22 +40,24 @@ pipeline {
         }
 
         stage('Build & Test') {
-            steps {
-                bat "mvn clean compile test -Dbrowser=${params.BROWSER}"
-            }
+             script {
+              def tagOption = params.TAG?.trim() ? "-DincludeTags=${params.TAG}" : ""
+              bat "mvn clean compile test -Dbrowser=${params.BROWSER} ${tagOption}"
+              }
         }
 
         stage('Allure Report') {
             steps {
-                allure([
-                    results: [[path: 'target/allure-results']]
-                ])
+
             }
         }
     }
 
 post {
     always {
+        allure([
+            results: [[path: 'target/allure-results']]
+        ])
         junit 'target/surefire-reports/*.xml'
     }
     success {
