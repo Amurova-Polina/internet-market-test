@@ -52,12 +52,6 @@ pipeline {
                 }
              }
         }
-
-        stage('Allure Report') {
-            steps {
-
-            }
-        }
     }
 
 post {
