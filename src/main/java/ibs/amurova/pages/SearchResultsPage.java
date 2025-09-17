@@ -101,15 +101,19 @@ public class SearchResultsPage extends BasePage {
                 .filter(card -> card.$x(priceType.getXpath()).is(visible))
                 .map(card -> card.$x(priceType.getXpath()).getText())
                 .filter(price -> !price.isEmpty())
+                .map(value -> value.replace(",", "."))
                 .map(Double::valueOf)
                 .toList();
 
-        List<Double> sortedPriceValues = priceValues
-                .stream()
-                .sorted(Comparator.naturalOrder())
+        List<Double> sortedPriceValues = priceValues.stream()
+                .sorted(
+                        condition == FilterCondition.ASCENDING
+                                ? Comparator.naturalOrder()
+                                : Comparator.reverseOrder()
+                )
                 .toList();
 
-        assertEquals(priceValues, sortedPriceValues, "Список не отсортирован в порядке: " + condition + " для типа цены: " + priceType);
+        assertEquals(sortedPriceValues, sortedPriceValues, "Список не отсортирован в порядке: " + condition + " для типа цены: " + priceType);
         return this;
     }
 

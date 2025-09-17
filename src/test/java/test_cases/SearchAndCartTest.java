@@ -1,4 +1,4 @@
-package testCases;
+package test_cases;
 
 import base.BaseTest;
 import ibs.amurova.data_provider.ProductTestData;

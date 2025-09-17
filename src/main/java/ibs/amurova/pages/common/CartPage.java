@@ -1,6 +1,7 @@
 package ibs.amurova.pages.common;
 
 import com.codeborne.selenide.ElementsCollection;
+import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import ibs.amurova.pages.abstraction.BasePage;
 import io.qameta.allure.Step;
@@ -9,7 +10,7 @@ import java.time.Duration;
 import java.util.List;
 
 import static com.codeborne.selenide.CollectionCondition.size;
-import static com.codeborne.selenide.Condition.visible;
+import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.$$x;
 import static com.codeborne.selenide.Selenide.$x;
 import static ibs.amurova.common_elements.CommonElements.*;
@@ -18,12 +19,13 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class CartPage extends BasePage {
 
-    private int itemSummNaturalPerson;
 
     private SelenideElement cartAdditionalBlock = divClass("cart_slider_header")
             .as("Блок с дополнительными товарами");
     private SelenideElement finalSumm = $x("//div[contains(@class, 'catalog__goods__blockwithdots total')]/div[contains(@class, 'catalog__goods__blockwithdots__value')]")
             .as("Итоговая сумма");
+    private SelenideElement naturalPersonIcon = $x("//input[contains(@id, 'cart_private')]/..")
+            .as("Иконка 'Физ. лицо'");
     private SelenideElement legalEntityIcon = $x("//input[contains(@id, 'cart_company')]/..")
             .as("Иконка 'Юр. лицо'");
     private SelenideElement clearCartButton = divClass("shopping_cart_action_item shopping_cart_action_clear")
@@ -41,14 +43,13 @@ public class CartPage extends BasePage {
     }
 
     private int calculateSummNaturalPerson() {
-        itemSummNaturalPerson = itemsCost
+        return itemsCost
                 .texts()
                 .stream()
                 .map(s -> s.replaceAll("\\D+", ""))
                 .filter(s -> !s.isEmpty())
                 .mapToInt(Integer::parseInt)
                 .sum();
-        return itemSummNaturalPerson;
     }
 
     @Step("Проверить, что в корзине \"{amount}\" товаров")
@@ -94,10 +95,16 @@ public class CartPage extends BasePage {
 
     @Step("Проверить, что сумма для юрлиц ниже")
     public CartPage checkSummLegalEntity() {
+        naturalPersonIcon.shouldBe(visible).click();
+        int summNaturalPerson = Integer.parseInt(finalSumm.text().replace(" ", ""));
         legalEntityIcon.shouldBe(visible).click();
+        String updatedText = finalSumm
+                .shouldNotHave(exactText(String.valueOf(summNaturalPerson)))
+                .text()
+                .replace(" ", "");
+        int summLegalEntity = Integer.parseInt(updatedText);
 
-        int summLegalEntity = Integer.parseInt(finalSumm.text().replace(" ", ""));
-        assertTrue(summLegalEntity < itemSummNaturalPerson,
+        assertTrue(summLegalEntity < summNaturalPerson,
                 "Сумма для юр. лица (" + summLegalEntity +
                         ") не меньше суммы для физ. лица (" + calculateSummNaturalPerson() + ")");
         return this;
