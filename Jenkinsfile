@@ -6,6 +6,11 @@ pipeline {
         jdk 'jdk-17'
     }
 
+    environment {
+        JAVA_TOOL_OPTIONS = "-Dfile.encoding=UTF-8"
+        LANG = "en_US.UTF-8"
+    }
+
     parameters {
         choice(
             name: 'GIT_BRANCH',
@@ -40,10 +45,12 @@ pipeline {
         }
 
         stage('Build & Test') {
-             script {
-              def tagOption = params.TAG?.trim() ? "-DincludeTags=${params.TAG}" : ""
-              bat "mvn clean compile test -Dbrowser=${params.BROWSER} ${tagOption}"
-              }
+             steps {
+                script {
+                    def tagOption = params.TAG?.trim() ? "-DincludeTags=${params.TAG}" : ""
+                    bat "chcp 65001 && mvn clean compile test -Dbrowser=${params.BROWSER} ${tagOption}"
+                }
+             }
         }
 
         stage('Allure Report') {
