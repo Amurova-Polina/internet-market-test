@@ -36,7 +36,7 @@ public class BaseTest {
         Configuration.browserSize = "1920x1080";
 
 //        Configuration.browserCapabilities = options;
-        Configuration.browser = System.getProperty("jenkins.browser");
+        Configuration.browser = System.getProperty("browser");
     }
 
     @BeforeEach

@@ -3,6 +3,7 @@ package test_cases;
 import base.BaseTest;
 import ibs.amurova.data_provider.ProductTestData;
 import ibs.amurova.pages.MainPage;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
@@ -10,6 +11,7 @@ import java.util.List;
 
 public class SearchAndCartTest extends BaseTest {
 
+    @Tag("1")
     @ParameterizedTest
     @MethodSource("ibs.amurova.data_provider.DataStorage#argsProviderFactory")
     public void searchAndCartTest(ProductTestData productTestData) {

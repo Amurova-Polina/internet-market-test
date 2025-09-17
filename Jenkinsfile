@@ -6,6 +6,11 @@ pipeline {
         jdk 'jdk-17'
     }
 
+    environment {
+        JAVA_TOOL_OPTIONS = "-Dfile.encoding=UTF-8"
+        LANG = "en_US.UTF-8"
+    }
+
     parameters {
         choice(
             name: 'GIT_BRANCH',
@@ -16,6 +21,12 @@ pipeline {
             name: 'BROWSER',
             choices: ['chrome', 'firefox'],
             description: 'Браузер для запуска тестов'
+        )
+
+        string(
+             name: 'TAG',
+             defaultValue: '',
+             description: 'Тег тестов, которые нужно запустить (оставьте пустым для всех)'
         )
     }
 
@@ -29,27 +40,25 @@ pipeline {
         stage('Checkout') {
             steps {
                 git branch: "${params.GIT_BRANCH}",
-                    url: 'git@github.com:Amurova-Polina/internet-market-test.git'
+                    url: 'https://github.com/Amurova-Polina/internet-market-test.git'
             }
         }
 
         stage('Build & Test') {
-            steps {
-                sh "mvn clean compile test -Dbrowser=${params.BROWSER}"
-            }
-        }
-
-        stage('Allure Report') {
-            steps {
-                allure([
-                    results: [[path: 'target/allure-results']]
-                ])
-            }
+             steps {
+                script {
+                    def tagOption = params.TAG?.trim() ? "-DincludeTags=\"${params.TAG}\"" : ""
+                    bat "chcp 65001 && mvn clean compile test -Dbrowser=${params.BROWSER} ${tagOption}"
+                }
+             }
         }
     }
 
 post {
     always {
+        allure([
+            results: [[path: 'target/allure-results']]
+        ])
         junit 'target/surefire-reports/*.xml'
     }
     success {
