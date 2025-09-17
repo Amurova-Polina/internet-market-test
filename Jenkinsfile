@@ -35,7 +35,7 @@ pipeline {
 
         stage('Build & Test') {
             steps {
-                sh "mvn clean compile test -Dbrowser=${params.BROWSER}"
+                bat "mvn clean compile test -Dbrowser=${params.BROWSER}"
             }
         }
 
