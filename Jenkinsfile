@@ -29,7 +29,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 git branch: "${params.GIT_BRANCH}",
-                    url: 'git@github.com:Amurova-Polina/internet-market-test.git'
+                    url: 'https://github.com/Amurova-Polina/internet-market-test.git'
             }
         }
 
