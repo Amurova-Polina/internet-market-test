@@ -35,7 +35,7 @@ pipeline {
 
         stage('Build & Test') {
             steps {
-                bat "mvn clean compile test "-Djenkins.browser=${params.BROWSER}""
+                bat "mvn clean compile test -Dbrowser=${params.BROWSER}"
             }
         }
 
