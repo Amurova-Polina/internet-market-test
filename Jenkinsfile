@@ -47,7 +47,7 @@ pipeline {
         stage('Build & Test') {
              steps {
                 script {
-                    def tagOption = params.TAG?.trim() ? "-DincludeTags=${params.TAG}" : ""
+                    def tagOption = params.TAG?.trim() ? "-DincludeTags=\"${params.TAG}\"" : ""
                     bat "chcp 65001 && mvn clean compile test -Dbrowser=${params.BROWSER} ${tagOption}"
                 }
              }
