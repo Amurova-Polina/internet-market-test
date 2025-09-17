@@ -18,7 +18,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class CartPage extends BasePage {
 
-    private int itemSummNaturalPerson;
 
     private SelenideElement cartAdditionalBlock = divClass("cart_slider_header")
             .as("Блок с дополнительными товарами");
@@ -41,14 +40,13 @@ public class CartPage extends BasePage {
     }
 
     private int calculateSummNaturalPerson() {
-        itemSummNaturalPerson = itemsCost
+        return itemsCost
                 .texts()
                 .stream()
                 .map(s -> s.replaceAll("\\D+", ""))
                 .filter(s -> !s.isEmpty())
                 .mapToInt(Integer::parseInt)
                 .sum();
-        return itemSummNaturalPerson;
     }
 
     @Step("Проверить, что в корзине \"{amount}\" товаров")
@@ -94,10 +92,11 @@ public class CartPage extends BasePage {
 
     @Step("Проверить, что сумма для юрлиц ниже")
     public CartPage checkSummLegalEntity() {
+        int summNaturalPerson = Integer.parseInt(finalSumm.text().replace(" ", ""));
         legalEntityIcon.shouldBe(visible).click();
 
         int summLegalEntity = Integer.parseInt(finalSumm.text().replace(" ", ""));
-        assertTrue(summLegalEntity < itemSummNaturalPerson,
+        assertTrue(summLegalEntity < summNaturalPerson,
                 "Сумма для юр. лица (" + summLegalEntity +
                         ") не меньше суммы для физ. лица (" + calculateSummNaturalPerson() + ")");
         return this;
