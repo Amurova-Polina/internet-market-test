@@ -25,6 +25,7 @@
         <allure-maven.version>2.15.2</allure-maven.version>
         <aspectj.version>1.9.21</aspectj.version>
         <maven-surefire-plugin.version>3.2.3</maven-surefire-plugin.version>
+        <includeTags></includeTags>
     </properties>
 
     <dependencies>
@@ -98,6 +99,9 @@
                         <junit.jupiter.extensions.autodetection.enabled>true
                         </junit.jupiter.extensions.autodetection.enabled>
                     </systemPropertyVariables>
+                    <properties>
+                        <includeTags>${includeTags}</includeTags>
+                    </properties>
                 </configuration>
                 <dependencies>
                     <dependency>
