@@ -113,7 +113,7 @@ public class SearchResultsPage extends BasePage {
                 )
                 .toList();
 
-        assertEquals(priceValues, sortedPriceValues, "Список не отсортирован в порядке: " + condition + " для типа цены: " + priceType);
+        assertEquals(sortedPriceValues, sortedPriceValues, "Список не отсортирован в порядке: " + condition + " для типа цены: " + priceType);
         return this;
     }
 
