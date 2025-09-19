@@ -40,10 +40,14 @@ pipeline {
 
         stage('Build & Test') {
             steps {
-                script {
-                    def tagOption = params.TAG?.trim() ? "-Dgroups=\"${params.TAG}\"" : ""
-                    withMaven(maven: 'maven-3.9.11') {
-                        sh "mvn clean test -Dbrowser=${params.BROWSER} ${tagOption}"
+                withMaven(maven: 'maven-3.9.11') {
+                    script {
+                        def tagOption = params.TAG?.trim() ? "-Dgroups=\"${params.TAG}\"" : ""
+                         if (isUnix()) {
+                            sh "mvn clean test -Dbrowser=${params.BROWSER} ${tagOption}"
+                        } else {
+                            bat "mvn clean test -Dbrowser=${params.BROWSER} ${tagOption}"
+                        }
                     }
                 }
             }
