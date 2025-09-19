@@ -6,27 +6,21 @@ pipeline {
         jdk 'jdk-17'
     }
 
-    environment {
-        JAVA_TOOL_OPTIONS = "-Dfile.encoding=UTF-8"
-        LANG = "en_US.UTF-8"
-    }
-
     parameters {
         choice(
             name: 'GIT_BRANCH',
             choices: ['dev', 'master'],
-            description: 'Ветка для сборки'
+            description: 'Choose project branch'
         )
         choice(
             name: 'BROWSER',
             choices: ['chrome', 'firefox'],
-            description: 'Браузер для запуска тестов'
+            description: 'Choose browser'
         )
-
         string(
              name: 'TAG',
              defaultValue: '',
-             description: 'Тег тестов, которые нужно запустить (оставьте пустым для всех)'
+             description: 'Tags of the tests to run (leave it empty for everyone)'
         )
     }
 
@@ -45,27 +39,29 @@ pipeline {
         }
 
         stage('Build & Test') {
-             steps {
+            steps {
                 script {
                     def tagOption = params.TAG?.trim() ? "-Dgroups=\"${params.TAG}\"" : ""
-                    bat "chcp 65001 && mvn clean compile test -Dbrowser=${params.BROWSER} ${tagOption}"
+                    withMaven(maven: 'maven-3.9.11') {
+                        sh "mvn clean test -Dbrowser=${params.BROWSER} ${tagOption}"
+                    }
                 }
-             }
+            }
         }
     }
 
-post {
-    always {
-        allure([
-            results: [[path: 'target/allure-results']]
-        ])
-        junit 'target/surefire-reports/*.xml'
+    post {
+        always {
+            allure([
+                results: [[path: 'target/allure-results']]
+            ])
+            junit 'target/surefire-reports/*.xml'
+        }
+        success {
+            echo '=========== Success! ==========='
+        }
+        failure {
+            echo '=========== Failure :( ==========='
+        }
     }
-    success {
-        echo '===========Победа-победа!==========='
-    }
-    failure {
-        echo '===========Ну ничего страшного. Пау-пау-пау-пау==========='
-    }
-}
 }
