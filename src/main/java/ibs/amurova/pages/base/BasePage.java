@@ -1,4 +1,4 @@
-package ibs.amurova.pages.abstraction;
+package ibs.amurova.pages.base;
 
 import ibs.amurova.pages.common.Header;
 import ibs.amurova.pages.common.TopMenu;

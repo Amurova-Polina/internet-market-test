@@ -2,7 +2,7 @@ package ibs.amurova.pages;
 
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
-import ibs.amurova.pages.abstraction.BasePage;
+import ibs.amurova.pages.base.BasePage;
 import ibs.amurova.pages.common.TopMenu;
 import io.qameta.allure.Step;
 

@@ -3,7 +3,7 @@ package ibs.amurova.pages;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
-import ibs.amurova.pages.abstraction.BasePage;
+import ibs.amurova.pages.base.BasePage;
 import ibs.amurova.pages.common.FilterCondition;
 import ibs.amurova.pages.common.FilterOption;
 import ibs.amurova.pages.common.PriceType;
