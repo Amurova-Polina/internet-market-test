@@ -4,7 +4,7 @@ import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import ibs.amurova.factory.CatalogueSection;
 import ibs.amurova.pages.SearchResultsPage;
-import ibs.amurova.pages.abstraction.BasePage;
+import ibs.amurova.pages.base.BasePage;
 import io.qameta.allure.Step;
 
 import static com.codeborne.selenide.Condition.text;

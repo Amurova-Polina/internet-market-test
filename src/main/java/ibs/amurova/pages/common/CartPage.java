@@ -1,9 +1,8 @@
 package ibs.amurova.pages.common;
 
 import com.codeborne.selenide.ElementsCollection;
-import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
-import ibs.amurova.pages.abstraction.BasePage;
+import ibs.amurova.pages.base.BasePage;
 import io.qameta.allure.Step;
 
 import java.time.Duration;
